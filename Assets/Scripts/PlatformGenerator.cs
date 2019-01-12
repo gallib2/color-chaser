@@ -9,21 +9,71 @@ public class PlatformGenerator : MonoBehaviour
     public float distanceBetween;
 
     private float platformWidth;
+    private float[] platformWidths;
 
-    // Start is called before the first frame update
+    public float distanceBetweenMin;
+    public float distanceBetweenMax;
+
+    //public GameObject[] thePlatforms;
+    private int platformSelector;
+
+    public ObjectPooler[] theObjectPools;
+
+    private float minHeight;
+    public Transform maxHieghtPoint;
+    private float maxHeight;
+    public float maxHeightChange;
+    public float heightChange;
+
     void Start()
     {
-        platformWidth = thePlatform.GetComponent<BoxCollider2D>().size.x;
+        //platformWidth = thePlatform.GetComponent<BoxCollider2D>().size.x;
+
+        platformWidths = new float[theObjectPools.Length];
+
+        for(int i = 0; i < theObjectPools.Length; i++)
+        {
+            platformWidths[i] = theObjectPools[i].pooledObject.GetComponent<BoxCollider2D>().size.x;
+        }
+
+        minHeight = transform.position.y;
+        maxHeight = maxHieghtPoint.position.y;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(transform.position.x < generationPoint.position.x)
+        if (transform.position.x < generationPoint.position.x)
         {
-            transform.position = new Vector3(transform.position.x + platformWidth + distanceBetween, transform.position.y, transform.position.z);
+            distanceBetween = Random.Range(distanceBetweenMin, distanceBetweenMax);
 
-            Instantiate(thePlatform, transform.position, transform.rotation);
+            platformSelector = Random.Range(0, theObjectPools.Length);
+
+            heightChange = transform.position.y + Random.Range(maxHeightChange, -maxHeightChange);
+
+            heightChange = Mathf.Clamp(heightChange, minHeight, maxHeight);
+
+            //if (heightChange > maxHeight)
+            //{
+            //    heightChange = maxHeight;
+            //}
+            //else if(heightChange < minHeight)
+            //{
+            //    heightChange = minHeight;
+            //}
+
+            transform.position = new Vector3(transform.position.x + (platformWidths[platformSelector] / 2) + distanceBetween, heightChange, transform.position.z);
+
+            //Instantiate(/*thePlatform*/ thePlatforms[platformSelector], transform.position, transform.rotation);
+
+            GameObject newPlatform = theObjectPools[platformSelector].GetPooledobject();
+
+            newPlatform.transform.position = transform.position;
+            newPlatform.transform.rotation = transform.rotation;
+
+            newPlatform.SetActive(true);
+
+            transform.position = new Vector3(transform.position.x + (platformWidths[platformSelector] / 2), transform.position.y, transform.position.z);
         }
     }
 }
