@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerControll : MonoBehaviour {
-
-
+public class PlayerControll : MonoBehaviour 
+{
     public float moveSpeed;
     public float jumpForce;
 
@@ -31,7 +30,8 @@ public class PlayerControll : MonoBehaviour {
 
         if(Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
-            if (grounded){
+            if (grounded)
+            {
                 myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpForce);
             }
 
