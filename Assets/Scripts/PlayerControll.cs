@@ -5,11 +5,16 @@ using UnityEngine;
 public class PlayerControll : MonoBehaviour 
 {
     public float moveSpeed;
+    private float moveSpeedStore;
     public float speedMultiplier;
-    public float jumpForce;
 
     public float speedIncreaseMilestone;
+    private float speedIncreaseMilestoneStore;
+
     private float speedMilstoneCount;
+    private float speedMilestoneCountStore;
+
+    public float jumpForce;
 
     public float jumpTime;
     private float jumpTimeCounter;
@@ -20,6 +25,8 @@ public class PlayerControll : MonoBehaviour
     public LayerMask whatIsGround;
     public Transform groundCheck;
     public float groundCheckRadius;
+
+    public ChaserGameManager theGameManager;
 
    // private Collider2D myCollider;
 
@@ -32,6 +39,10 @@ public class PlayerControll : MonoBehaviour
         jumpTimeCounter = jumpTime;
 
         speedMilstoneCount = speedIncreaseMilestone;
+
+        moveSpeedStore = moveSpeed;
+        speedMilestoneCountStore = speedMilstoneCount;
+        speedIncreaseMilestoneStore = speedIncreaseMilestone;
 	}
 	
 	// Update is called once per frame
@@ -79,5 +90,16 @@ public class PlayerControll : MonoBehaviour
             jumpTimeCounter = jumpTime;
         }
 
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "killBox")
+        {
+            theGameManager.RestartGame();
+            moveSpeed = moveSpeedStore;
+            speedIncreaseMilestone = speedIncreaseMilestoneStore;
+            speedMilstoneCount = speedMilestoneCountStore;
+        }
     }
 }
