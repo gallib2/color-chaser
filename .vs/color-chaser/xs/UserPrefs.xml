@@ -1,13 +1,9 @@
 ﻿<Properties StartupConfiguration="{255CB2E2-F38B-11F1-2D2D-BE0C154B44C2}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PlatformsTypesEnum.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PlatforDestroyer.cs">
     <Files>
-      <File FileName="Assets/Scripts/PlayerControll.cs" Line="161" Column="6" />
-      <File FileName="Assets/Scripts/CameraController.cs" Line="23" Column="37" />
-      <File FileName="Assets/Scripts/ChaserGameManager.cs" Line="45" Column="52" />
-      <File FileName="Assets/Scripts/PlatformGenerator.cs" Line="153" Column="6" />
-      <File FileName="Assets/Scripts/ObjectPooler.cs" Line="33" Column="42" />
-      <File FileName="Assets/Scripts/PlatforDestroyer.cs" Line="22" Column="13" />
-      <File FileName="Assets/Scripts/PlatformsTypesEnum.cs" Line="7" Column="4" />
+      <File FileName="Assets/Scripts/ScoreManager.cs" Line="51" Column="25" />
+      <File FileName="Assets/Scripts/coinGenerator.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/PlatforDestroyer.cs" Line="7" Column="22" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

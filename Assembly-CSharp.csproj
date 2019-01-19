@@ -68,7 +68,6 @@
     <Compile Include="Assets\Scripts\pickupPoints.cs" />
     <Compile Include="Assets\Scripts\PlatforDestroyer.cs" />
     <Compile Include="Assets\Scripts\PlatformGenerator.cs" />
-    <Compile Include="Assets\Scripts\PlatformsTypesConstants.cs" />
     <Compile Include="Assets\Scripts\PlayerControll.cs" />
     <Compile Include="Assets\Scripts\ScoreManager.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">

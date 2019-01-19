@@ -45,6 +45,7 @@ public class PlayerControll : MonoBehaviour
    // private Collider2D myCollider;
 
     private Animator myAnimator;
+    public float blackPlatformEffectTime = 3.0f;
 
 
     // Use this for initialization
@@ -170,7 +171,7 @@ public class PlayerControll : MonoBehaviour
             OnTouchBlackPlatform();
         }
 
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(blackPlatformEffectTime);
 
         if (OnStopPainting != null)
         {
