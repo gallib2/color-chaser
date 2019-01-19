@@ -1,9 +1,9 @@
 ﻿<Properties StartupConfiguration="{255CB2E2-F38B-11F1-2D2D-BE0C154B44C2}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/ChaserGameManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PlayerControll.cs">
     <Files>
-      <File FileName="Assets/Scripts/PlayerControll.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/PlayerControll.cs" Line="12" Column="46" />
       <File FileName="Assets/Scripts/CameraController.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/ChaserGameManager.cs" Line="8" Column="5" />
+      <File FileName="Assets/Scripts/ChaserGameManager.cs" Line="38" Column="53" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
