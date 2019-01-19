@@ -25,6 +25,11 @@ public class PlatformGenerator : MonoBehaviour
     public float maxHeightChange;
     public float heightChange;
 
+    private coinGenerator theCoinGenerator;
+
+    public float randomCoinThreshhold;
+
+
     void Start()
     {
         //platformWidth = thePlatform.GetComponent<BoxCollider2D>().size.x;
@@ -38,6 +43,9 @@ public class PlatformGenerator : MonoBehaviour
 
         minHeight = transform.position.y;
         maxHeight = maxHieghtPoint.position.y;
+
+        theCoinGenerator = FindObjectOfType<coinGenerator>();
+
     }
 
     // Update is called once per frame
@@ -70,8 +78,14 @@ public class PlatformGenerator : MonoBehaviour
 
             newPlatform.transform.position = transform.position;
             newPlatform.transform.rotation = transform.rotation;
-
             newPlatform.SetActive(true);
+
+
+
+            if (Random.Range(0f, 100f) < randomCoinThreshhold)
+                {
+                    theCoinGenerator.spownCoins(new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z));
+                }
 
             transform.position = new Vector3(transform.position.x + (platformWidths[platformSelector] / 2), transform.position.y, transform.position.z);
         }

@@ -19,6 +19,9 @@ public class PlayerControll : MonoBehaviour
     public float jumpTime;
     private float jumpTimeCounter;
 
+    private bool stoppedJumping;
+    private bool canDublejump;
+
     private Rigidbody2D myRigidbody;
 
     public bool grounded;
@@ -30,11 +33,14 @@ public class PlayerControll : MonoBehaviour
 
    // private Collider2D myCollider;
 
+    private Animator myAnimator;
+
 
     // Use this for initialization
     void Start () {
         myRigidbody = GetComponent<Rigidbody2D>();
         //myCollider = GetComponent<Collider2D>();
+        myAnimator = GetComponent<Animator>();
 
         jumpTimeCounter = jumpTime;
 
@@ -43,7 +49,9 @@ public class PlayerControll : MonoBehaviour
         moveSpeedStore = moveSpeed;
         speedMilestoneCountStore = speedMilstoneCount;
         speedIncreaseMilestoneStore = speedIncreaseMilestone;
-	}
+
+        stoppedJumping = true;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -67,11 +75,20 @@ public class PlayerControll : MonoBehaviour
             if (grounded)
             {
                 myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpForce);
+                stoppedJumping = false; 
+            }
+
+            if(!grounded && canDublejump)
+            {
+                myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpForce);
+                jumpTimeCounter = jumpTime;
+                stoppedJumping = false;
+                canDublejump = false;
             }
 
         }
 
-        if(Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0))
+        if((Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0)) && !stoppedJumping)
         {
             if(jumpTimeCounter > 0)
             {
@@ -83,12 +100,18 @@ public class PlayerControll : MonoBehaviour
         if(Input.GetKeyUp(KeyCode.Space) || Input.GetMouseButtonUp(0))
         {
             jumpTimeCounter = 0;
+            stoppedJumping = true;
         }
 
         if(grounded)
         {
             jumpTimeCounter = jumpTime;
+            canDublejump = true;
         }
+
+
+        myAnimator.SetFloat("Speed", myRigidbody.velocity.x);
+        myAnimator.SetBool("Grounded", grounded);
 
     }
 

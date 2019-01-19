@@ -12,11 +12,17 @@ public class ChaserGameManager : MonoBehaviour
 
     private PlatforDestroyer[] platformList;
 
+    private ScoreManager theScoreManager;
+
+
     // Start is called before the first frame update
     void Start()
     {
         platformStartPoint = platformGenrator.position;
         playerStartPoint = thePlayer.transform.position;
+
+        theScoreManager = FindObjectOfType<ScoreManager>();
+
     }
 
     // Update is called once per frame
@@ -32,6 +38,7 @@ public class ChaserGameManager : MonoBehaviour
 
     public IEnumerator RestartGameCo()
     {
+        theScoreManager.scoureIncreasing = false;
         thePlayer.gameObject.SetActive(false);
         yield return new WaitForSeconds(0.5f);
         platformList = FindObjectsOfType<PlatforDestroyer>();
@@ -43,5 +50,8 @@ public class ChaserGameManager : MonoBehaviour
         thePlayer.transform.position = playerStartPoint;
         platformGenrator.position = platformStartPoint;
         thePlayer.gameObject.SetActive(true);
+
+        theScoreManager.scoreCount = 0;
+        theScoreManager.scoureIncreasing = true;
     }
 }
