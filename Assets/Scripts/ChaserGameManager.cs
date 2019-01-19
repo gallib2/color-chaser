@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ChaserGameManager : MonoBehaviour
 {
-    public Transform platformGenrator;
+   // public Transform platformGenrator;
+    public PlatformGenerator platformGenrator;
     private Vector3 platformStartPoint;
 
     public PlayerControll thePlayer;
@@ -18,7 +19,7 @@ public class ChaserGameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        platformStartPoint = platformGenrator.position;
+        platformStartPoint = platformGenrator.transform.position;
         playerStartPoint = thePlayer.transform.position;
 
         theScoreManager = FindObjectOfType<ScoreManager>();
@@ -48,7 +49,8 @@ public class ChaserGameManager : MonoBehaviour
         }
 
         thePlayer.transform.position = playerStartPoint;
-        platformGenrator.position = platformStartPoint;
+        platformGenrator.transform.position = platformStartPoint;
+        platformGenrator.stopPaintPlatforms();
         thePlayer.gameObject.SetActive(true);
 
         theScoreManager.scoreCount = 0;

@@ -17,6 +17,8 @@ public class PlatformGenerator : MonoBehaviour
     //public GameObject[] thePlatforms;
     private int platformSelector;
 
+    public SpriteRenderer[] spriteRenderers;
+
     public ObjectPooler[] theObjectPools;
 
     private float minHeight;
@@ -29,10 +31,12 @@ public class PlatformGenerator : MonoBehaviour
 
     public float randomCoinThreshhold;
 
+    public bool toPaintInBlack;
 
     void Start()
     {
         //platformWidth = thePlatform.GetComponent<BoxCollider2D>().size.x;
+        toPaintInBlack = false;
 
         platformWidths = new float[theObjectPools.Length];
 
@@ -45,6 +49,19 @@ public class PlatformGenerator : MonoBehaviour
         maxHeight = maxHieghtPoint.position.y;
 
         theCoinGenerator = FindObjectOfType<coinGenerator>();
+
+    }
+
+    private void OnEnable()
+    {
+        PlayerControll.OnTouchBlackPlatform += paintPlatformsInBlack;
+        PlayerControll.OnStopPainting += stopPaintPlatforms;
+    }
+
+    private void OnDisable()
+    {
+        PlayerControll.OnTouchBlackPlatform -= paintPlatformsInBlack;
+        PlayerControll.OnStopPainting -= stopPaintPlatforms;
 
     }
 
@@ -75,6 +92,14 @@ public class PlatformGenerator : MonoBehaviour
             //Instantiate(/*thePlatform*/ thePlatforms[platformSelector], transform.position, transform.rotation);
 
             GameObject newPlatform = theObjectPools[platformSelector].GetPooledobject();
+            spriteRenderers = newPlatform.GetComponentsInChildren<SpriteRenderer>();
+
+            PaintPlatformByType(newPlatform);
+
+            if (toPaintInBlack == true)
+            {
+                PaintPlatforms(Color.black);
+            }
 
             newPlatform.transform.position = transform.position;
             newPlatform.transform.rotation = transform.rotation;
@@ -89,5 +114,55 @@ public class PlatformGenerator : MonoBehaviour
 
             transform.position = new Vector3(transform.position.x + (platformWidths[platformSelector] / 2), transform.position.y, transform.position.z);
         }
+    }
+
+    private void PaintPlatformByType(GameObject newPlatform)
+    {
+
+        switch (newPlatform.tag)
+        {
+            case "WhitePlatform":
+                {
+                    PaintPlatforms(Color.white);
+                    break;
+                }
+            case "RedPlatform":
+                {
+                    PaintPlatforms(Color.red);
+                    break;
+                }
+            case "GreenPlatform":
+                {
+                    PaintPlatforms(Color.green);
+                    break;
+                }
+            case "BlackPlatform":
+                {
+                    PaintPlatforms(Color.black);
+                    break;
+                }
+            default:
+                break;
+        }
+    }
+
+    private void PaintPlatforms(Color color)
+    {
+        for (int i = 0; i < spriteRenderers.Length; i++)
+        {
+            spriteRenderers[i].color = color;
+        }
+    }
+
+    private void paintPlatformsInBlack()
+    {
+        toPaintInBlack = true;
+        Debug.Log("Got here - paintPlatformsInBlack");
+    }
+
+    public void stopPaintPlatforms()
+    {
+        toPaintInBlack = false;
+        Debug.Log("Got here - stopPaintPlatforms");
     }
 }

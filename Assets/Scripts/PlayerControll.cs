@@ -1,9 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerControll : MonoBehaviour 
 {
+    //public delegate void BlackPlatformAction();
+    public static event Action OnTouchBlackPlatform;
+
+    public static event Action OnStopPainting;
+
+
     public float moveSpeed;
     private float moveSpeedStore;
     public float speedMultiplier;
@@ -15,6 +22,10 @@ public class PlayerControll : MonoBehaviour
     private float speedMilestoneCountStore;
 
     public float jumpForce;
+    private float jumpForceStore;
+
+    public float jumpForceMultiplierGreen;
+    public float jumpForceMultiplierRed;
 
     public float jumpTime;
     private float jumpTimeCounter;
@@ -43,6 +54,7 @@ public class PlayerControll : MonoBehaviour
         myAnimator = GetComponent<Animator>();
 
         jumpTimeCounter = jumpTime;
+        jumpForceStore = jumpForce;
 
         speedMilstoneCount = speedIncreaseMilestone;
 
@@ -117,6 +129,8 @@ public class PlayerControll : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
+        jumpForce = jumpForceStore;
+
         if (other.gameObject.tag == "killBox")
         {
             theGameManager.RestartGame();
@@ -124,5 +138,44 @@ public class PlayerControll : MonoBehaviour
             speedIncreaseMilestone = speedIncreaseMilestoneStore;
             speedMilstoneCount = speedMilestoneCountStore;
         }
+
+        if(other.gameObject.tag == "GreenPlatform")
+        {
+            jumpForce = jumpForce * jumpForceMultiplierGreen;
+        }
+
+        if(other.gameObject.tag == "RedPlatform")
+        {
+            if(jumpForceMultiplierRed > 0)
+            {
+                jumpForce = jumpForce / jumpForceMultiplierRed;
+            }
+        }
+
+        if (other.gameObject.tag == "BlackPlatform")
+        {
+            OnPlayerTouchBlackPlatform();
+        }
     }
+
+    private void OnPlayerTouchBlackPlatform()
+    {
+        StartCoroutine("PlayerTouchBlackPlatformCo");
+    }
+
+    public IEnumerator PlayerTouchBlackPlatformCo()
+    {
+        if (OnTouchBlackPlatform != null)
+        {
+            OnTouchBlackPlatform();
+        }
+
+        yield return new WaitForSeconds(3);
+
+        if (OnStopPainting != null)
+        {
+            OnStopPainting();
+        }
+    }
+
 }
